@@ -29,7 +29,7 @@ public class PythonRunner {
             context.getBindings("python").putMember("mappings", dict);
 
             // Set the Python variable "mappings"
-            context.getBindings("python").putMember("file_input", fileInput);
+            context.getBindings("python").putMember("input_path", fileInput);
 
             // Execute the Python script
             Source source = Source.newBuilder(

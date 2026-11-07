@@ -10,7 +10,7 @@ public class Main {
             charsToChange.put('A', 'C');
             charsToChange.put('a', 'c');
 
-            PythonRunner.modifyTrueTypeFont(charsToChange);
+            PythonRunner.modifyTrueTypeFont(charsToChange, "src/main/resources/MontserratBold-DOWZd.ttf");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
