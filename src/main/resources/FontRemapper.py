@@ -4,8 +4,8 @@ sys.path.append("target/classes/packages")
 
 from fontTools.ttLib import TTFont
 
-mappings = None
-input_path = None
+# mappings = None
+# input_path = None
 
 font = TTFont(input_path)
 
@@ -21,4 +21,4 @@ for unicode_value, glyph_name in sorted(original.items()):
         # Sets all values to a specific glyph
         original[unicode_value] = mappings[glyph_name]
 
-font.save("output")
+font.save(output_path)

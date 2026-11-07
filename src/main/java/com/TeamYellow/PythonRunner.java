@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class PythonRunner {
-    public static void modifyTrueTypeFont(HashMap<Character, Character> mapOfChars, String fileInput) throws Exception {
+    public static void modifyTrueTypeFont(HashMap<Character, Character> mapOfChars, String fileInput, String fileOutput) throws Exception {
         try (Context context = Context.newBuilder("python")
                 .allowAllAccess(true)
                 .build()) {
@@ -29,7 +29,10 @@ public class PythonRunner {
             context.getBindings("python").putMember("mappings", dict);
 
             // Set the Python variable "mappings"
-            context.getBindings("python").putMember("file_input", fileInput);
+            context.getBindings("python").putMember("input_path", fileInput);
+
+            // Set the Python variable "mappings"
+            context.getBindings("python").putMember("output_path", fileOutput);
 
             // Execute the Python script
             Source source = Source.newBuilder(
