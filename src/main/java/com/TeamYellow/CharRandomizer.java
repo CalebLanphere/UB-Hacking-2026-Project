@@ -12,7 +12,7 @@ public class CharRandomizer {
 
         ArrayList<Character> input = new ArrayList<>(52);
 
-        ArrayList<Character> keys = new ArrayList<>(input);
+
 
         char[] output = new char[52];
 
@@ -26,6 +26,8 @@ public class CharRandomizer {
         for (char c = 'A'; c <= 'Z'; c++) {
             input.add(c);
         }
+
+        ArrayList<Character> keys = new ArrayList<>(input);
 
         HashMap<Character, Character> mappings = new HashMap<>();
 
