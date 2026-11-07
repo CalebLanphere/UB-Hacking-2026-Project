@@ -21,4 +21,4 @@ for unicode_value, glyph_name in sorted(original.items()):
         # Sets all values to a specific glyph
         original[unicode_value] = mappings[glyph_name]
 
-font.save("output.ttf")
+font.save(output_path)
