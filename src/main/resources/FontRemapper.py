@@ -1,3 +1,7 @@
+import sys
+
+sys.path.append("target/classes/packages")
+
 from fontTools.ttLib import TTFont
 
 font = TTFont(input_path)
@@ -7,7 +11,7 @@ original = font.getBestCmap()
 
 for unicode_value, glyph_name in sorted(original.items()):
     print(f"{glyph_name}", end=", ")
-    
+
     if mappings.get(glyph_name):
         # Removes the old glyph
         original.pop(glyph_name, None)

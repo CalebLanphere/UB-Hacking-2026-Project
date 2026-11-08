@@ -14,7 +14,7 @@ public class PythonRunner {
      * @param mapOfChars A HashMap of characters that the font will change
      * @param fileInput The .ttf font to modify
      * @param fileOutput Where to put and what to call the modified font
-     * @throws IOException If the python script cannot be executed or the file cannot be found
+     * @throws IOException If the Python script cannot be executed or the file cannot be found
      */
     public static void modifyTrueTypeFont(HashMap<Character, Character> mapOfChars,
                                           String fileInput,
