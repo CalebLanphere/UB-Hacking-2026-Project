@@ -74,4 +74,17 @@ public class TextObfuscationScrambleService {
 
         return entity;
     }
+
+    public AuctionEntity[] getAuctions() {
+        List<Object[]> auctionObj = auctionRepository.getAuctions();
+        AuctionEntity[] entities = new AuctionEntity[auctionObj.size()];
+
+        for(int i = 0; i < entities.length; i++) {
+            Object[] obj = auctionObj.get(i);
+
+            entities[i] = new AuctionEntity((int) obj[0], (String) obj[1], (String) obj[2], (String) obj[3]);
+        }
+
+        return entities;
+    }
 }

@@ -15,6 +15,9 @@ public interface AuctionRepository extends CrudRepository<TextObfuscationEntity,
     @Query(value = "SELECT * FROM auctions WHERE bidid = ?1", nativeQuery=true)
     public List<Object[]> getAuction(Integer id);
 
+    @Query(value = "SELECT * FROM auctions", nativeQuery=true)
+    public List<Object[]> getAuctions();
+
     @Transactional
     @Modifying
     @Query(value = "INSERT INTO auctions (bidid, itemname, itemdescription, sellername) VALUES (?1, ?2, ?3, ?4)", nativeQuery=true)

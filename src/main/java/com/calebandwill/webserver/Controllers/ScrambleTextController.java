@@ -2,13 +2,12 @@ package com.calebandwill.webserver.Controllers;
 
 import com.calebandwill.webserver.AuctionEntity;
 import com.calebandwill.webserver.Paths.ResourcePaths;
+import com.calebandwill.webserver.Repository.AuctionRepository;
 import com.calebandwill.webserver.Services.TextObfuscationScrambleService;
 import com.calebandwill.webserver.TextObfuscation.TextObfuscationService;
 import com.calebandwill.webserver.TextScrambleMapping;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.json.Json;
-import jakarta.json.JsonObject;
-import jakarta.json.JsonObjectBuilder;
+import jakarta.json.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,16 +40,34 @@ public class ScrambleTextController {
     }
 
     @GetMapping("/auction")
-    public JsonObject uploadAuction(@RequestParam(required = true) String bidID) {
-        AuctionEntity auction = service.getAuction(Integer.parseInt(bidID));
-        JsonObjectBuilder builder = Json.createObjectBuilder();
+    public ResponseEntity<String> uploadAuction(@RequestParam(required = false) String bidID) {
 
-        builder.add("bidId", String.valueOf(auction.getBidId()));
-        builder.add("itemName", scramble(auction.getItemName()));
-        builder.add("itemDesc", scramble(auction.getItemDesc()));
-        builder.add("sellerName", scramble(auction.getSellerName()));
+        if(bidID != null) {
+            AuctionEntity auction = service.getAuction(Integer.parseInt(bidID));
+            JsonObjectBuilder builder = Json.createObjectBuilder();
 
-        return builder.build();
+            builder.add("bidId", String.valueOf(auction.getBidId()));
+            builder.add("itemName", scramble(auction.getItemName()));
+            builder.add("itemDesc", scramble(auction.getItemDesc()));
+            builder.add("sellerName", scramble(auction.getSellerName()));
+
+            return new ResponseEntity<>(builder.build().toString(), HttpStatus.OK);
+        } else {
+            AuctionEntity[] auctions = service.getAuctions();
+            JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+
+            for(AuctionEntity auction : auctions) {
+                JsonObjectBuilder builder = Json.createObjectBuilder();
+
+                builder.add("bidId", String.valueOf(auction.getBidId()));
+                builder.add("itemName", scramble(auction.getItemName()));
+                builder.add("itemDesc", scramble(auction.getItemDesc()));
+                builder.add("sellerName", scramble(auction.getSellerName()));
+
+                arrBuilder.add(builder.build());
+            }
+            return new ResponseEntity<>(arrBuilder.build().toString(), HttpStatus.OK);
+        }
     }
 
     @PostMapping("/regenerate-scramble")
