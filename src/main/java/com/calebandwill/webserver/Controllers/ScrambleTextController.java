@@ -1,5 +1,6 @@
 package com.calebandwill.webserver.Controllers;
 
+import com.calebandwill.webserver.Paths.ResourcePaths;
 import com.calebandwill.webserver.Services.TextObfuscationScrambleService;
 import com.calebandwill.webserver.TextObfuscation.TextObfuscationService;
 import com.calebandwill.webserver.TextScrambleMapping;
@@ -10,8 +11,11 @@ import jakarta.json.JsonObjectBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 @RestController
@@ -52,9 +56,19 @@ public class ScrambleTextController {
     }
 
     @PostMapping("/regenerate-scramble")
-    public ResponseEntity<String> regenerateSrambler() {
+    public ResponseEntity<String> regenerateSrambler(@RequestParam MultipartFile font) {
         try {
-            service.placeMapInDb(TextObfuscationService.generateFont("MontserratBold-DOWZd.ttf"));
+            Logger.getGlobal().info(font.getName() + " | " + font.getOriginalFilename());
+            if(Objects.requireNonNull(font.getOriginalFilename()).indexOf('.') != -1) {
+                String fileType = font.getOriginalFilename().substring(font.getOriginalFilename().indexOf('.'));
+                if(!fileType.equals(".ttf")) {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+            }
+            String fileName = font.getOriginalFilename();
+            font.transferTo(Path.of(ResourcePaths.FONT_DIRECTORY + fileName));
+
+            service.placeMapInDb(TextObfuscationService.generateFont(fileName));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
