@@ -1,0 +1,27 @@
+package com.calebandwill.webserver;
+
+import com.calebandwill.webserver.Exceptions.SetupFailureException;
+import com.calebandwill.webserver.TextObfuscation.Setup;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.logging.Logger;
+
+@SpringBootApplication
+public class WebServerApplication {
+
+    public static void main(String[] args) {
+        try {
+            // Set up the relative directories the application requires
+            Setup.setupDirectories();
+        } catch (SetupFailureException exception) {
+            // If it cannot create the directories, FileNotFoundExceptions will be thrown internally
+            Logger.getGlobal().severe("Application Failed To Create Required Directories! " + exception.getMessage());
+            System.exit(1);
+        }
+
+        // Starts Spring Boot application
+        SpringApplication.run(WebServerApplication.class, args);
+    }
+
+}
