@@ -21,17 +21,9 @@ public class ScrambleTextController {
         this.service = service;
     }
 
-    @PutMapping("/upload-text")
+    @PutMapping("/upload-auction")
     public ResponseEntity<String> uploadTextToScramble(@RequestParam(required = true) String textToScramble) {
-        Logger.getGlobal().info(textToScramble);
-        char[] arrOfScrambledText = new char[textToScramble.length()];
-        char[] originalCharArray = textToScramble.toCharArray();
 
-        for(int i = 0; i < textToScramble.length(); i++) {
-            arrOfScrambledText[i] = scrambleMapping.mapOfCharactersScrambled.get(originalCharArray[i]);
-        }
-
-        Logger.getGlobal().info(new String(arrOfScrambledText));
 
         return null;
     }
@@ -45,6 +37,18 @@ public class ScrambleTextController {
         }
 
         return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    private void scramble(String textToScramble) {
+        Logger.getGlobal().info(textToScramble);
+        char[] arrOfScrambledText = new char[textToScramble.length()];
+        char[] originalCharArray = textToScramble.toCharArray();
+
+        for(int i = 0; i < textToScramble.length(); i++) {
+            arrOfScrambledText[i] = scrambleMapping.mapOfCharactersScrambled.get(originalCharArray[i]);
+        }
+
+        Logger.getGlobal().info(new String(arrOfScrambledText));
     }
 
 }
