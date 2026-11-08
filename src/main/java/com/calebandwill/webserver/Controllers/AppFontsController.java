@@ -1,5 +1,6 @@
 package com.calebandwill.webserver.Controllers;
 
+import com.calebandwill.webserver.Paths.ResourcePaths;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +14,7 @@ public class AppFontsController {
 
     @GetMapping("/{fontName}")
     public Resource getFontByName(@PathVariable String fontName) throws MalformedURLException {
-        File fileToReturn = new File("/Users/fazcreativity/Documents/Java-Projects/ObfuscationUBHacking/App/Fonts/" + fontName);
-        return new UrlResource( fileToReturn.toURI());
-    }
-
-    @GetMapping("/index")
-    public Resource getIndexFile() throws MalformedURLException {
-        File fileToReturn = new File("/Users/fazcreativity/Documents/Java-Projects/ObfuscationUBHacking/App/index.html");
+        File fileToReturn = new File(ResourcePaths.FONT_DIRECTORY + fontName);
         return new UrlResource( fileToReturn.toURI());
     }
 }
