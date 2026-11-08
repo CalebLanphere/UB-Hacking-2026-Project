@@ -1,5 +1,6 @@
 package com.calebandwill.webserver.Services;
 
+import com.calebandwill.webserver.Repository.AuctionRepository;
 import com.calebandwill.webserver.Repository.TextObfuscationScrambleRepository;
 import com.calebandwill.webserver.TextObfuscation.TextObfuscationService;
 import com.calebandwill.webserver.TextScrambleMapping;
@@ -17,9 +18,11 @@ import java.util.logging.Logger;
 @Service
 public class TextObfuscationScrambleService {
     private TextObfuscationScrambleRepository repository;
+    private AuctionRepository auctionRepository;
 
-    public TextObfuscationScrambleService(TextObfuscationScrambleRepository repository) {
+    public TextObfuscationScrambleService(TextObfuscationScrambleRepository repository, AuctionRepository auctionRepository) {
         this.repository = repository;
+        this.auctionRepository = auctionRepository;
     }
 
     public HashMap<Character, Character> getMapOfCharacters() {
@@ -51,5 +54,9 @@ public class TextObfuscationScrambleService {
         }
 
         TextScrambleMapping.mapOfCharactersScrambled = getMapOfCharacters();
+    }
+
+    public void createAuction(int bidId, String itemName, String itemDesc, String sellerName) {
+        auctionRepository.createTextObfuscationMap(bidId, itemName, itemDesc, sellerName);
     }
 }

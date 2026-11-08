@@ -22,8 +22,12 @@ public class ScrambleTextController {
     }
 
     @PutMapping("/upload-auction")
-    public ResponseEntity<String> uploadTextToScramble(@RequestParam(required = true) String textToScramble) {
-
+    public ResponseEntity<String> uploadAuction(@RequestParam(required = true) String bidID,
+                                                       @RequestParam(required = true) String itemName,
+                                                       @RequestParam(required = true) String itemDesc,
+                                                       @RequestParam(required = false) String currBid,
+                                                       @RequestParam(required = false) String currBidBy) {
+        service.createAuction(Integer.parseInt(bidID), itemName, itemDesc, "");
 
         return null;
     }
