@@ -5,6 +5,7 @@ import com.calebandwill.webserver.TextObfuscation.Setup;
 import com.calebandwill.webserver.TextObfuscation.TextObfuscationService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -22,11 +23,11 @@ public class WebServerApplication {
             System.exit(1);
         }
 
-//        try {
-//            TextObfuscationService.generateFont("MontserratBold-DOWZd.ttf");
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+        try {
+            TextObfuscationService.generateFont("MontserratBold-DOWZd.ttf");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         // Starts Spring Boot application
         SpringApplication.run(WebServerApplication.class, args);
