@@ -45,7 +45,7 @@ public class ScrambleTextController {
         AuctionEntity auction = service.getAuction(Integer.parseInt(bidID));
         JsonObjectBuilder builder = Json.createObjectBuilder();
 
-        builder.add("bidId", auction.getBidId());
+        builder.add("bidId", String.valueOf(auction.getBidId()));
         builder.add("itemName", scramble(auction.getItemName()));
         builder.add("itemDesc", scramble(auction.getItemDesc()));
         builder.add("sellerName", scramble(auction.getSellerName()));
@@ -56,7 +56,6 @@ public class ScrambleTextController {
     @PostMapping("/regenerate-scramble")
     public ResponseEntity<String> regenerateSrambler(@RequestParam MultipartFile font) {
         try {
-            Logger.getGlobal().info(font.getName() + " | " + font.getOriginalFilename());
             if(Objects.requireNonNull(font.getOriginalFilename()).indexOf('.') != -1) {
                 String fileType = font.getOriginalFilename().substring(font.getOriginalFilename().indexOf('.'));
                 if(!fileType.equals(".ttf")) {
@@ -75,7 +74,6 @@ public class ScrambleTextController {
     }
 
     private String scramble(String textToScramble) {
-        Logger.getGlobal().info(textToScramble);
         char[] arrOfScrambledText = new char[textToScramble.length()];
         char[] originalCharArray = textToScramble.toCharArray();
 
@@ -90,8 +88,6 @@ public class ScrambleTextController {
                 arrOfScrambledText[i] = TextScrambleMapping.mapOfCharactersScrambled.get(originalCharArray[i]);
             }
         }
-
-        Logger.getGlobal().info(new String(arrOfScrambledText));
 
         return new String(arrOfScrambledText);
     }
