@@ -35,5 +35,19 @@ public class Setup {
             throw new SetupFailureException("Failed to create directory '/App/Fonts': "
                     + securityException.getMessage());
         }
+
+        // Sets up a file reference to the directory listed | PWD/App/Photos
+        dir = new File(ResourcePaths.PHOTO_DIRECTORY);
+
+        try {
+            // If the directory doesn't exist, create the directory
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
+        } catch (SecurityException securityException) {
+            // If the directory cannot be created due to a security rule, throw a SetupFailure
+            throw new SetupFailureException("Failed to create directory '/App/Photos': "
+                    + securityException.getMessage());
+        }
     }
 }

@@ -9,4 +9,6 @@ public class ResourcePaths {
     public static final String APP_DIRECTORY = WORKING_DIRECTORY + "App" + SEPARATOR;
 
     public static final String FONT_DIRECTORY = APP_DIRECTORY + "Fonts" + SEPARATOR;
+
+    public static final String PHOTO_DIRECTORY = APP_DIRECTORY + "Photos" + SEPARATOR;
 }
