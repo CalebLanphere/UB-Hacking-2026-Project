@@ -1,5 +1,6 @@
 package com.calebandwill.webserver.Services;
 
+import com.calebandwill.webserver.AuctionEntity;
 import com.calebandwill.webserver.Repository.AuctionRepository;
 import com.calebandwill.webserver.Repository.TextObfuscationScrambleRepository;
 import com.calebandwill.webserver.TextObfuscation.TextObfuscationService;
@@ -65,16 +66,12 @@ public class TextObfuscationScrambleService {
         auctionRepository.createAuction(bidId, itemName, itemDesc, sellerName);
     }
 
-    public JsonObject getAuction(int bidId) {
+    public AuctionEntity getAuction(int bidId) {
         List<Object[]> auctionObj = auctionRepository.getAuction(bidId);
         Object[] obj = auctionObj.get(0);
-        JsonObjectBuilder builder = Json.createObjectBuilder();
 
-        builder.add("bidId", Integer.toString((int) obj[0]));
-        builder.add("itemName", (String) obj[1]);
-        builder.add("itemDesc", (String) obj[2]);
-        builder.add("sellerName", (String) obj[3]);
+        AuctionEntity entity = new AuctionEntity((int) obj[0], (String) obj[1], (String) obj[2], (String) obj[3]);
 
-        return builder.build();
+        return entity;
     }
 }

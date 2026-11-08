@@ -17,4 +17,7 @@ public class TextObfuscationEntity {
     @JdbcTypeCode(SqlTypes.JSON)
     @JsonIgnore // @TODO Might be an issue soon
     private JSONPObject mapJsonObject;
+
+
+
 }

@@ -1,5 +1,6 @@
 package com.calebandwill.webserver.Controllers;
 
+import com.calebandwill.webserver.AuctionEntity;
 import com.calebandwill.webserver.Paths.ResourcePaths;
 import com.calebandwill.webserver.Services.TextObfuscationScrambleService;
 import com.calebandwill.webserver.TextObfuscation.TextObfuscationService;
@@ -41,16 +42,13 @@ public class ScrambleTextController {
 
     @GetMapping("/auction")
     public JsonObject uploadAuction(@RequestParam(required = true) String bidID) {
-        JsonObject auction = service.getAuction(Integer.parseInt(bidID));
+        AuctionEntity auction = service.getAuction(Integer.parseInt(bidID));
         JsonObjectBuilder builder = Json.createObjectBuilder();
 
-        for(String key : auction.keySet()) {
-            if(!key.equals("bidId")) {
-                builder.add(key, Json.createValue(scramble(auction.getString(key))));
-            } else {
-                builder.add(key, Json.createValue(auction.getString(key)));
-            }
-        }
+        builder.add("bidId", auction.getBidId());
+        builder.add("itemName", scramble(auction.getItemName()));
+        builder.add("itemDesc", scramble(auction.getItemDesc()));
+        builder.add("sellerName", scramble(auction.getSellerName()));
 
         return builder.build();
     }
