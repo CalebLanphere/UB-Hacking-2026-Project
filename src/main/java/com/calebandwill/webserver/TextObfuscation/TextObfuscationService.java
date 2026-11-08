@@ -14,6 +14,7 @@ public class TextObfuscationService {
     public static void generateFont(String fontFileName) throws IOException {
         HashMap<Character, Character> charsToChange = CharRandomizer.scrambler();
 
+
         // Python runner is so we can use the FontTools library to modify fonts
         PythonRunner.modifyTrueTypeFont(charsToChange,
                 ResourcePaths.FONT_DIRECTORY + fontFileName,

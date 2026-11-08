@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.logging.Logger;
+
 @RestController
 @RequestMapping("/api/scramble")
 public class ScrambleTextController {
@@ -18,7 +20,8 @@ public class ScrambleTextController {
 
     @PutMapping("/upload-text")
     public ResponseEntity<String> uploadTextToScramble(@RequestParam(required = true) String textToScramble) {
-
+        Logger.getGlobal().info(textToScramble);
+        return null;
     }
 
 }
