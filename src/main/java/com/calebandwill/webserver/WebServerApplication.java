@@ -23,11 +23,11 @@ public class WebServerApplication {
             System.exit(1);
         }
 
-        try {
-            TextObfuscationService.generateFont("MontserratBold-DOWZd.ttf");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            TextObfuscationService.generateFont("MontserratBold-DOWZd.ttf");
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
 
         // Starts Spring Boot application
         SpringApplication.run(WebServerApplication.class, args);

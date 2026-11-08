@@ -28,7 +28,7 @@ public class TextObfuscationService {
         JsonObjectBuilder builder = Json.createObjectBuilder();
 
         for(Character characterToChange : charsToChange.keySet()) {
-            builder.add(String.valueOf(charsToChange.get(characterToChange)), characterToChange);
+            builder.add(String.valueOf(charsToChange.get(characterToChange)), String.valueOf(characterToChange));
         }
 
         System.out.println(builder.build());
