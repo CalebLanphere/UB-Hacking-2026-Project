@@ -17,4 +17,5 @@ Creating custom font files to unscramble our obfuscated HTML.
 We learned about how multiple programming languages can work together, and gained more experience working with Springboot and Github.
 
 ## What's next for Scrambl
+Allow web servers to continuously scramble data in real time.
 Find more creative solutions to handle other scrape-able data like photos and ensure the service is scalable.
