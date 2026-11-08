@@ -50,6 +50,16 @@ public class CharRandomizer {
         }
 
 
+        // incase it needs to be reversed:
+        /*
+        for (int i = 0; i < input.size(); i++){
+            mappings.put(output[i], input.get(i));
+        }
+
+
+         */
+
+
         return mappings;
     }
 
