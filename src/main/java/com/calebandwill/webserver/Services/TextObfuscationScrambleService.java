@@ -2,6 +2,7 @@ package com.calebandwill.webserver.Services;
 
 import com.calebandwill.webserver.Repository.TextObfuscationScrambleRepository;
 import com.calebandwill.webserver.TextObfuscation.TextObfuscationService;
+import com.calebandwill.webserver.TextScrambleMapping;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import org.springframework.stereotype.Service;
@@ -48,5 +49,7 @@ public class TextObfuscationScrambleService {
         } else {
             repository.createTextObfuscationMap(0, json.toString());
         }
+
+        TextScrambleMapping.mapOfCharactersScrambled = getMapOfCharacters();
     }
 }

@@ -3,6 +3,7 @@ package com.calebandwill.webserver.TextObfuscation;
 import com.calebandwill.webserver.Paths.ResourcePaths;
 import com.calebandwill.webserver.Services.TextObfuscationScrambleService;
 import jakarta.json.Json;
+import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 import org.springframework.stereotype.Component;
 import tools.jackson.core.json.JsonFactoryBuilder;
@@ -23,7 +24,7 @@ public class TextObfuscationService {
      * @param fontFileName The filename of the font to modify
      * @throws IOException If the file cannot be found or executed
      */
-    public static void generateFont(String fontFileName) throws IOException {
+    public static JsonObject generateFont(String fontFileName) throws IOException {
         HashMap<Character, Character> charsToChange = CharRandomizer.scrambler();
         JsonObjectBuilder builder = Json.createObjectBuilder();
 
@@ -31,12 +32,14 @@ public class TextObfuscationService {
             builder.add(String.valueOf(charsToChange.get(characterToChange)), String.valueOf(characterToChange));
         }
 
-        System.out.println(builder.build());
+//        System.out.println(builder.build());
 
 
         // Python runner is so we can use the FontTools library to modify fonts
         PythonRunner.modifyTrueTypeFont(charsToChange,
                 ResourcePaths.FONT_DIRECTORY + fontFileName,
                 ResourcePaths.FONT_DIRECTORY + "output.ttf");
+
+        return builder.build();
     }
 }

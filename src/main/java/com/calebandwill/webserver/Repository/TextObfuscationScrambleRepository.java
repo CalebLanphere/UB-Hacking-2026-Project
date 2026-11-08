@@ -1,6 +1,8 @@
 package com.calebandwill.webserver.Repository;
 
 import com.calebandwill.webserver.TextObfuscationEntity;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,11 +19,11 @@ public interface TextObfuscationScrambleRepository extends CrudRepository<TextOb
 
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO text_obfuscation (id, values) VALUES (0, ?2)", nativeQuery=true)
-    public List<Object[]> createTextObfuscationMap(Integer id, String jsonObjectString);
+    @Query(value = "INSERT INTO text_obfuscation (id, values) VALUES (0, CAST(?2 AS jsonb))", nativeQuery=true)
+    public void createTextObfuscationMap(Integer id, String jsonObjectString);
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE text_obfuscation set values = ?2 WHERE id = ?1", nativeQuery=true)
-    public List<Object[]> updateTextObfuscationMap(Integer id, String jsonObjectString);
+    @Query(value = "UPDATE text_obfuscation set values = CAST(?2 AS jsonb) WHERE id = ?1", nativeQuery=true)
+    public void updateTextObfuscationMap(Integer id, String jsonObjectString);
 }
