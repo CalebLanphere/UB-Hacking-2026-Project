@@ -10,8 +10,4 @@ import java.util.HashMap;
 @Component
 public class TextScrambleMapping {
     public static HashMap<Character, Character> mapOfCharactersScrambled;
-
-    public TextScrambleMapping(TextObfuscationScrambleService service) {
-        mapOfCharactersScrambled = service.getMapOfCharacters();
-    }
 }

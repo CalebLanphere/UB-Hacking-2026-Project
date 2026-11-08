@@ -8,7 +8,7 @@ const submitTextToScramble = (event) => {
     event.preventDefault()
     const form = document.getElementById("scrambleTextForm")
 
-    fetch("/api/scramble/upload-text", {
+    fetch("/api/scramble/upload-auction", {
         method: "put",
         body: new FormData(form)
     }).then(res => {

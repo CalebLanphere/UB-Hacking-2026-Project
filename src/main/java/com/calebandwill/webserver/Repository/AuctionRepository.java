@@ -12,13 +12,13 @@ import java.util.List;
 @Repository
 public interface AuctionRepository extends CrudRepository<TextObfuscationEntity, Integer> {
 
-    @Query(value = "SELECT * FROM auctions WHERE id = ?1", nativeQuery=true)
-    public List<Object[]> getTextObfuscationMap(Integer id);
+    @Query(value = "SELECT * FROM auctions WHERE bidid = ?1", nativeQuery=true)
+    public List<Object[]> getAuction(Integer id);
 
     @Transactional
     @Modifying
     @Query(value = "INSERT INTO auctions (bidid, itemname, itemdescription, sellername) VALUES (?1, ?2, ?3, ?4)", nativeQuery=true)
-    public void createTextObfuscationMap(Integer id, String itemName, String itemDesc, String sellerName);
+    public void createAuction(Integer id, String itemName, String itemDesc, String sellerName);
 //
 //    @Transactional
 //    @Modifying

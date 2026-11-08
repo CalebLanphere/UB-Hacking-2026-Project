@@ -6,6 +6,7 @@ import com.calebandwill.webserver.TextObfuscation.TextObfuscationService;
 import com.calebandwill.webserver.TextScrambleMapping;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
+import jakarta.json.JsonObjectBuilder;
 import org.springframework.stereotype.Service;
 import tools.jackson.databind.util.JSONPObject;
 
@@ -30,7 +31,11 @@ public class TextObfuscationScrambleService {
         HashMap<Character, Character> returnMap = new HashMap<>();
 
         if(entry.isEmpty()) {
-            Logger.getGlobal().warning("shits fucked");
+            try {
+                placeMapInDb(TextObfuscationService.generateFont("MontserratBold-DOWZd.ttf"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         if(entry.size() > 1) {
@@ -57,6 +62,19 @@ public class TextObfuscationScrambleService {
     }
 
     public void createAuction(int bidId, String itemName, String itemDesc, String sellerName) {
-        auctionRepository.createTextObfuscationMap(bidId, itemName, itemDesc, sellerName);
+        auctionRepository.createAuction(bidId, itemName, itemDesc, sellerName);
+    }
+
+    public JsonObject getAuction(int bidId) {
+        List<Object[]> auctionObj = auctionRepository.getAuction(bidId);
+        Object[] obj = auctionObj.get(0);
+        JsonObjectBuilder builder = Json.createObjectBuilder();
+
+        builder.add("bidId", Integer.toString((int) obj[0]));
+        builder.add("itemName", (String) obj[1]);
+        builder.add("itemDesc", (String) obj[2]);
+        builder.add("sellerName", (String) obj[3]);
+
+        return builder.build();
     }
 }
