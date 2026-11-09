@@ -1,21 +1,38 @@
-## Inspiration
-When talking to ACV Auctions at the career fair, they told us that a main concern they have with their auction site is having web scrapers re-upload their listings elsewhere. This made us start brainstorming ways to help prevent that. This project is more relevant than ever today with the rise of AI agents that can scrape websites very quickly. 
+# Scrambl - Data Obfuscation targeted to disrupt AI Agent web scrapers
 
-## What it does
-Our library takes a website's data and runs it through a randomly generated character mapping, which scrambles the letters of the alphabet. It then writes this obfuscated data to the HTML file, and generates a custom font so that the data is readable for humans on the website, but appears as jargon to any bots scraping the HTML. This is created such that there is no impact on user experience, but it ruins the data for the majority of AI agents, which rely on the website's data.
+### Created for the UBHacking 2026 Hackathon
 
-## How we built it
-The demonstration website was written in Java with Springboot, and our font generation is done in Python. The python code is executed on our server using Graalpy. For our demonstration of it's effectiveness, we are using Crawl4AI, to scrape the site. 
+Caleb Lanphere & Will Jones
 
-## Challenges we ran into
-Finding out how to modify fonts was a big challenge, because there is a big lack of information online regarding this topic.
+## Purpose
+Increase the difficulty of extracting data from a source without unduly impacting end users
 
-## Accomplishments that we're proud of
-Creating custom font files to unscramble our obfuscated HTML.
+## History
+This project came about from a discussion with a e-commerce leader ACV Auctions and there difficulties protecting their data from AI Agents scraping the information from their pages and reposting them externally, potentially causing reputational damage.
 
-## What we learned
-We learned about how multiple programming languages can work together, and gained more experience working with Springboot and Github.
+This was a problem we could see growing prevalent everywhere, especially with the speed that AI Agents are able to scrape the entire web for any data and modify it how it deems fit. This is the problem we set out to solve.
 
-## What's next for Scrambl
-Allow web servers to continuously scramble data in real time.
-Find more creative solutions to handle other scrape-able data like photos and ensure the service is scalable.
+## Methodology
+We had two main requirements for our system:
+1. The system must not further impact users. The reason other mitigation techniques were not able to be used was due to the undue impact it would have on users. For this reason, we must not have any impact on end users
+2. The system must not let AI Agents read legible data.
+
+With these two guiding factors, we set out with our solution. We wanted to be able to secretly encode and decode text provided by the server to the client without clearly exposing the method to which we decode the text. This led us to our solution.
+
+## Solution
+Fonts are a set of mappings that set specific Unicode characters to a specific glyph. Since these contained a mapping of valid character data, we could use them to decode our scrambled data. Fonts are only used for GUI elements, so all AI Agents that scrape sites ignore this element, leaving the scrambled data for them to access.
+
+This solution used a randomly generated mapping of Unicode characters to randomly map characters to glyphs in our modified fonts. By doing the same method in reverse, we could generate a mapping of characters to encode text with that would visually return to the original text. This solution achieves both requirements, as the AI Agents would only see garbled data and the user would see the expected text without compromise to their user experience.
+
+## Features
+ - Easy Implementation: Our system is designed to require no modification to external data you want to scramble. This means that using this library is as simple as calling a method.
+ - Universal For All Fonts: Our system is font-agnostic, so you can provide any font you wish to create an obfuscation for and it will create mappings for the characters inside that font.
+ - Scalable: Our system was created with scalability in mind! This software only needs persistent data storage for the mappings generated. The system loads this data from the database when the first call to scramble is initiated and will not request it again.
+
+## Trade Offs
+1. It requires the use of our modified font for any data you are obfuscating. This can ruin non-scrambled text if this font is used in the incorrect spots in the front end.
+2. Copy-Paste will have to be handled in Javascript at runtime, which can expose the data obfuscation technique
+3. Screen Readers will be impacted, as it will not have legible data to use
+
+## Further Information
+Additional Information can be found in the Product Pitch at: https://youtu.be/dXrAe5yPwdI
